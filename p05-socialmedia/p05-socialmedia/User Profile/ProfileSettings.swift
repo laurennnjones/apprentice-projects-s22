@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Foundation
+import UIKit
 
 struct ProfileSettings: View {
     var body: some View {

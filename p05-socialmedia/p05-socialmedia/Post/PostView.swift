@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
+import UIKit
+import Foundation
 
 struct PostView: View {
+    @StateObject var vm = PostViewModel()
     let post: Post
+    @State var currLikeImageName = "heart"
+    @State var commentText = ""
     
     var body: some View {
         VStack(spacing: 15) {
@@ -24,18 +29,53 @@ struct PostView: View {
                         .foregroundColor(.secondary)
                         .font(.callout)
                 }
-                
                 Spacer()
             }
             
             Text(post.postContent)
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .onTapGesture(count: 2) {
+                    vm.flipLikedState()
+                    currLikeImageName = vm.currentLikeImageName
+                }
             
             HStack {
-                Label("\(post.likeCount)", systemImage: "heart")
-                Label("\(post.commentCount)", systemImage: "heart")
-                Spacer()
+                Label("\(post.likeCount)", systemImage: currLikeImageName)
+                    //.onTapGesture (count: 3){
+                        NavigationLink(destination: CommentView()) {
+                        Label("\(post.commentCount)", systemImage: "message")
+                        //}
+                    }
+//                Button(action: {
+//                    }) { NavigationLink(destination: CommentView()) {
+//                    Label("\(post.commentCount)", systemImage: "message")
+//                    }
+                //}
             }
+            Spacer()
+        }
+    }
+}
+
+struct CommentView: View {
+    @StateObject var vm = PostViewModel()
+    
+    var body: some View {
+        NavigationView {
+                Form {
+                    TextField("Comment", text: $vm.commentText)
+                        .multilineTextAlignment(.leading)
+                }
+            padding()
+            .navigationBarTitle("What Do You Want to Share?", displayMode: .inline)
+            .navigationBarItems(
+                trailing:
+                    // SWITCH TO POSTVIEW()
+                NavigationLink(destination: CommentView()) {
+                Image(systemName: "square.and.arrow.up")
+                }
+            )
+            
         }
     }
 }

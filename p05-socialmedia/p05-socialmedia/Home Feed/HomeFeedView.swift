@@ -2,18 +2,19 @@
 //  HomeFeedView.swift
 //  p05-socialmedia
 //
-//  Created by Samuel Shi on 2/1/22.
+//  Created by Lauren Jones on 2/25/22.
 //
 
+import Foundation
 import SwiftUI
 
 struct HomeFeedView: View {
-    @StateObject var vm = HomeFeedViewModel()
+    @StateObject var hfvm = HomeFeedViewModel()
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(vm.posts) { post in
+                ForEach(hfvm.posts) { post in
                     PostView(post: post)
                 }
             }
@@ -21,7 +22,7 @@ struct HomeFeedView: View {
             .navigationTitle("bluebird")
         }
         .onAppear(perform: {
-            vm.fetchPosts()
+            hfvm.fetchPosts()
         })
     }
 }

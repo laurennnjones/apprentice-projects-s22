@@ -12,13 +12,13 @@ class NewPostViewModel: ObservableObject {
     
     func makePost() {
         let post = Post(id: UUID(),
-                        authorName: "Sam Shi",
-                        authorUsername: "samrshi",
-                        authorImageAddress: "sam",
+                        authorName: "Lauren Jones",
+                        authorUsername: "lojo",
+                        authorImageAddress: "lojo",
                         datePosted: Date(),
                         postContent: currentText,
-                        likeCount: 0,
-                        commentCount: 0)
+                        likeCount: 400,
+                        commentCount: 20)
         PostsService.makePost(post: post)
         currentText = ""
     }
